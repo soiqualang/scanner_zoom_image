@@ -193,7 +193,7 @@
         function onClick(e){
             let p = pin;
             pin = false;
-            onMouseMove(e);
+            onMouseMove.bind(root)(e);
             pin = p;
         }
         function onPin(e){
