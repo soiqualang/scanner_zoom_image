@@ -88,6 +88,8 @@
         root.addEventListener("contextmenu", onPin, false);
         root.addEventListener("click", onClick, false);
         function onClick(e){
+            e.stopPropagation();
+            e.preventDefault();
             let p = pin;
             pin = false;
             onMouseMove.bind(root)(e);
@@ -150,6 +152,7 @@
             urlbox2.value = elm.dataset.url2;
             urlChange.bind(urlbox1)();
             selector.style.display = "none";
+            preview.style.visibility="hidden";
         }
     })
     urlbox1.addEventListener("click", showSelector);
@@ -171,6 +174,7 @@
     }
     document.documentElement.addEventListener("click", function(e){
         selector.style.display = "none";
+        preview.style.visibility="hidden";
     })
     urlbox1.addEventListener("input", urlChange)
     function urlChange(e){
