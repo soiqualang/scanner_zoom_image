@@ -8,7 +8,7 @@
     <div class="row flex" style="position:relative;">
         <input type="text" name="" id="url1" placeholder="URL" class="item">
         <input type="text" name="" id="url2" placeholder="URL 2 (Optional)" class="item">
-        <div id="selector"></div>
+        <div id="menu"></div>
     </div>
     <div class="container">
         <div id="zoom" class="magnify-wrapper magnify">
@@ -19,54 +19,54 @@
 </div>
 <script src="data.js"></script>
 <script>
-    if(typeof data==="undefined"){
+    if (typeof data === "undefined") {
         data = [];
     }
     let imgbox = document.getElementById("main-img");
-    let urlbox1= document.getElementById("url1");
-    let urlbox2= document.getElementById("url2");
-    let selector =document.getElementById("selector");
+    let urlbox1 = document.getElementById("url1");
+    let urlbox2 = document.getElementById("url2");
+    let menu = document.getElementById("menu");
     let preview = document.getElementById("preview");
     start();
 
-    function start(){
+    function start() {
         let item = null;
-        if(data && data.length){
+        if (data && data.length) {
             item = data[0];
             imgbox.src = item[0];
             urlbox1.value = item[0];
-            urlbox2.value = item[1]?item[1]:"";
+            urlbox2.value = item[1] ? item[1] : "";
         }
-        magnify("#zoom", 2, item?item[1]:null, "#preview");
+        magnify("#zoom", 2, item ? item[1] : null, "#preview");
         createMenu();
     }
-    function createMenu(){
-        for(let item of data){
-            let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1]?item[1]:item[0]}">
+    function createMenu() {
+        for (let item of data) {
+            let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1] ? item[1] : item[0]}">
             <span style="margin-right:10px;width:50px;max-height:100%;"><img class="imgsel" src="${item[0]}"></span>
             <span>${item[0]}</span>
             </div>`;
-            let div=document.createElement("div");
+            let div = document.createElement("div");
             div.innerHTML = html;
-            selector.appendChild(div.children[0]);
+            menu.appendChild(div.children[0]);
         }
     }
-    function magnify(zoomSel, zoom = 3, src =null, preview = null) {
-        let pin =false;
+    function magnify(zoomSel, zoom = 3, src = null, preview = null) {
+        let pin = false;
         let root = document.querySelector(zoomSel);
         let original = root.querySelector("img");
         let magnified;
-        preview = preview ? (typeof preview==="string"?document.querySelector(preview):preview):null;
-        if(!src){
-            src =  original.src;
+        preview = preview ? (typeof preview === "string" ? document.querySelector(preview) : preview) : null;
+        if (!src) {
+            src = original.src;
         }
         magnified = document.createElement("div");
         magnified.id = "glasses";
         magnified.classList.add("glasses")
         root.appendChild(magnified);
-        magnified.style.backgroundImage = "url("+src+")";
+        magnified.style.backgroundImage = "url(" + src + ")";
         let imgpreview = null;
-        if(preview){
+        if (preview) {
             preview.classList.add("magnify-preview");
 
             // imgpreview= document.createElement("div");
@@ -75,19 +75,19 @@
             // preview.appendChild(imgpreview);
             // imgpreview.style.backgroundImage = "url("+src+")";
 
-            imgpreview= document.createElement("img");
-            imgpreview.id= "imgpreview";
+            imgpreview = document.createElement("img");
+            imgpreview.id = "imgpreview";
             imgpreview.classList.add("magnify-imgpreview2");
             preview.appendChild(imgpreview);
             imgpreview.src = src;
 
-            imgpreview.style.transform = "scale("+zoom+")";
+            imgpreview.style.transform = "scale(" + zoom + ")";
             imgpreview.style.transformOrigin = "0px 0px";
         }
         root.addEventListener("mousemove", onMouseMove, false);
         root.addEventListener("contextmenu", onPin, false);
         root.addEventListener("click", onClick, false);
-        function onClick(e){
+        function onClick(e) {
             e.stopPropagation();
             e.preventDefault();
             let p = pin;
@@ -95,16 +95,16 @@
             onMouseMove.bind(root)(e);
             pin = p;
         }
-        function onPin(e){
+        function onPin(e) {
             e.preventDefault();
             e.stopPropagation();
             pin = !pin;
-            if(!pin){
+            if (!pin) {
                 onMouseMove(e);
             }
         }
         function onMouseMove(e) {
-            if(pin) return;
+            if (pin) return;
             let pos = this.getBoundingClientRect();
             let style = magnified.style,
                 x = e.clientX - pos.left,
@@ -126,78 +126,78 @@
             style.backgroundPositionX = xperc - 9 + "%";
             // Set the background of the magnified image vertical
             style.backgroundPositionY = yperc - 9 + "%";
-            if(preview){
+            if (preview) {
                 // imgpreview.style.backgroundPositionX = xperc - 9 + "%";
                 // imgpreview.style.backgroundPositionY = yperc - 9 + "%";
                 let pw = preview.offsetWidth;
                 let ph = preview.offsetHeight;
                 let iw = imgpreview.offsetWidth;
                 let ih = imgpreview.offsetHeight;
-                let dx= pw/2-x/w*(iw*zoom);
-                let dy = ph/2-y/h*(ih*zoom);
-                imgpreview.style.top = dy+"px";
-                imgpreview.style.left = dx+"px";
+                let dx = pw / 2 - x / w * (iw * zoom);
+                let dy = ph / 2 - y / h * (ih * zoom);
+                imgpreview.style.top = dy + "px";
+                imgpreview.style.left = dx + "px";
             }
             // Move the magnifying glass with the mouse movement.
             style.left = x + "px";
             style.top = y + "px";
         }
     }
-    selector.addEventListener("click", function(e){
+    menu.addEventListener("click", function (e) {
         let elm = e.target.closest(".sel");
-        if(elm){
+        if (elm) {
             e.preventDefault();
             e.stopPropagation();
             urlbox1.value = elm.dataset.url;
             urlbox2.value = elm.dataset.url2;
             urlChange.bind(urlbox1)();
-            selector.style.display = "none";
-            preview.style.visibility="hidden";
+            menu.style.display = "none";
+            preview.style.visibility = "hidden";
         }
     })
     urlbox1.addEventListener("click", showSelector);
     urlbox2.addEventListener("click", showSelector);
-    function showSelector(e){
+    function showSelector(e) {
         e.preventDefault();
         e.stopPropagation();
         // let pos = this.getBoundingClientRect();
-        let pos={
+        let pos = {
             width: this.offsetWidth,
             height: this.offsetHeight,
             top: this.offsetTop,
             left: this.offsetLeft,
         };
-        selector.style.width = pos.width;
-        selector.style.top = pos.top + pos.height;
-        selector.style.left = pos.left;
-        selector.style.display = "block";
+        menu.style.width = pos.width;
+        menu.style.top = pos.top + pos.height;
+        menu.style.left = pos.left;
+        menu.style.display = "block";
     }
-    document.documentElement.addEventListener("click", function(e){
-        selector.style.display = "none";
-        preview.style.visibility="hidden";
+    document.documentElement.addEventListener("click", function (e) {
+        menu.style.display = "none";
+        preview.style.visibility = "hidden";
     })
     urlbox1.addEventListener("input", urlChange)
-    function urlChange(e){
+    function urlChange(e) {
         let url = this.value.trim();
-        if(!url) return;
+        if (!url) return;
         document.getElementById("main-img").src = url;
-        let url2= urlbox2.value.trim();
-        if(!url2) url2 = url;
-        document.getElementById("glasses").style.backgroundImage = "url("+url2+")";
+        let url2 = urlbox2.value.trim();
+        if (!url2) url2 = url;
+        document.getElementById("glasses").style.backgroundImage = "url(" + url2 + ")";
         document.getElementById("imgpreview").src = url2;
     }
-    urlbox2.addEventListener("input", function(e){
+    urlbox2.addEventListener("input", function (e) {
         let url = this.value.trim();
-        if(!url) {
+        if (!url) {
             url = urlbox1.value.trim();
         }
-        document.getElementById("glasses").style.backgroundImage = "url("+url+")";
+        document.getElementById("glasses").style.backgroundImage = "url(" + url + ")";
         document.getElementById("imgpreview").src = url;
     })
-    imgbox.addEventListener("mouseover", function(e){
-        preview.style.visibility="visible";
+    imgbox.addEventListener("mouseover", function (e) {
+        preview.style.visibility = "visible";
     });
-    imgbox.addEventListener("mouseout", function(e){
-        preview.style.visibility="hidden";
+    imgbox.addEventListener("mouseout", function (e) {
+        preview.style.visibility = "hidden";
     });
 </script>
