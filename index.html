@@ -19,6 +19,9 @@
 </div>
 <script src="data.js"></script>
 <script>
+    if(typeof data==="undefined"){
+        data = [];
+    }
     let imgbox = document.getElementById("main-img");
     let urlbox1= document.getElementById("url1");
     let urlbox2= document.getElementById("url2");
@@ -27,7 +30,7 @@
 
     function start(){
         let item = null;
-        if(typeof data!=="undefined" && data.length){
+        if(data && data.length){
             item = data[0];
             imgbox.src = item[0];
             urlbox1.value = item[0];
@@ -37,7 +40,6 @@
         createSelector();
     }
     function createSelector(){
-        if(typeof data==="undefined") return;
         for(let item of data){
             let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1]?item[1]:item[0]}">
             <span style="margin-right:10px;width:50px;max-height:100%;"><img class="imgsel" src="${item[0]}"></span>
