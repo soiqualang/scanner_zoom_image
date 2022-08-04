@@ -132,16 +132,18 @@
     start();
 
     function start(){
-        let item = data[0];
-        if(item){
+        let item = null;
+        if(typeof data!=="undefined" && data.length){
+            item = data[0];
             imgbox.src = item[0];
             urlbox1.value = item[0];
-            urlbox2.value = item[1];
+            urlbox2.value = item[1]?item[1]:"";
         }
-        magnify("#zoom", 2, item && item[1], "#preview");
+        magnify("#zoom", 2, item?item[1]:null, "#preview");
         createSelector();
     }
     function createSelector(){
+        if(typeof data==="undefined") return;
         for(let item of data){
             let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1]?item[1]:item[0]}">
             <span style="margin-right:10px;width:50px;max-height:100%;"><img class="imgsel" src="${item[0]}"></span>
