@@ -1,4 +1,4 @@
 # scanner
 
-# Tham khảo từ:
+# Tham khảo:
 https://daily-dev-tips.com/posts/vanilla-javascript-image-magnify/
