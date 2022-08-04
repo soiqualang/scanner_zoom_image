@@ -1,6 +1,6 @@
 # scanner
 # Thêm ảnh:
-Chỉnh sữa file data.js
+Chỉnh sửa file data.js
 
 let data=[
   ["http://example.com/image1", "http://example.com/image2"],
