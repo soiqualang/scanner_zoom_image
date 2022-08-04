@@ -45,7 +45,7 @@
     function createMenu(data) {
         let list=[];
         for (let item of data) {
-            let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1] ? item[1] : item[0]}">
+            let html = `<div class="sel" data-url="${item[0]}" data-url2="${item[1] ? item[1] : ""}">
             <span style="margin-right:10px;width:50px;max-height:100%;"><img class="imgsel" src="${item[0]}"></span>
             <span>${item[0]}</span>
             </div>`;
