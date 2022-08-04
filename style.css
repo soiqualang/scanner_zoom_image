@@ -8,15 +8,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
     flex-wrap: nowrap;
     position: relative;
     max-height: 90vh;
 }
 .magnify-preview{
     height: 100%;
-    background-repeat: no-repeat;
-    background-color: #fff;
     overflow: hidden;
     position: relative;
 }
@@ -90,7 +87,7 @@ input{
 .flex{
     display: flex;
 }
-.item{
+.flex .item{
     flex: 1;
 }
 #menu{
@@ -113,6 +110,10 @@ input{
     text-overflow: ellipsis;
     display: flex;
     max-height: 50px;
+    cursor: pointer;
+}
+.sel:hover{
+    background-color: white;
 }
 .imgsel{
     width: 50px;
