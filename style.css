@@ -83,7 +83,7 @@ input{
 .item{
     flex: 1;
 }
-#selector{
+#menu{
     padding: 10px;
     z-index: 9999;
     position: absolute;
