@@ -280,7 +280,7 @@
         let url = this.value.trim();
         if(!url) return;
         document.getElementById("main-img").src = url;
-        let url2= document.getElementById("url2").value.trim();
+        let url2= urlbox2.value.trim();
         if(!url2) url2 = url;
         document.getElementById("glasses").style.backgroundImage = "url("+url2+")";
         document.getElementById("imgpreview").src = url2;
@@ -288,7 +288,7 @@
     urlbox2.addEventListener("input", function(e){
         let url = this.value.trim();
         if(!url) {
-            url = document.getElementById("url").value.trim();
+            url = urlbox1.value.trim();
         }
         document.getElementById("glasses").style.backgroundImage = "url("+url+")";
         document.getElementById("imgpreview").src = url;
