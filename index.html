@@ -26,6 +26,7 @@
     let urlbox1= document.getElementById("url1");
     let urlbox2= document.getElementById("url2");
     let selector =document.getElementById("selector");
+    let preview = document.getElementById("preview");
     start();
 
     function start(){
@@ -189,4 +190,10 @@
         document.getElementById("glasses").style.backgroundImage = "url("+url+")";
         document.getElementById("imgpreview").src = url;
     })
+    imgbox.addEventListener("mouseover", function(e){
+        preview.style.visibility="visible";
+    });
+    imgbox.addEventListener("mouseout", function(e){
+        preview.style.visibility="hidden";
+    });
 </script>
