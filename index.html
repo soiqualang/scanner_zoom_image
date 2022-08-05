@@ -29,6 +29,7 @@
     let urlbox2 = document.getElementById("url2");
     let menu = document.getElementById("menu");
     let preview = document.getElementById("preview");
+    let zoom = document.getElementById("zoom");
     start();
 
     function start() {
@@ -88,6 +89,7 @@
         }
         root.addEventListener("mousemove", onMouseMove, false);
         root.addEventListener("touchmove", onMouseMove, false);
+        root.addEventListener("mouseover", onMouseMove, false);
         root.addEventListener("contextmenu", onPin, false);
         root.addEventListener("click", onClick, false);
         function onClick(e) {
