@@ -140,8 +140,7 @@
                 let ih = imgpreview.offsetHeight;
                 let dx = pw / 2 - x / w * (iw * zoom);
                 let dy = ph / 2 - y / h * (ih * zoom);
-                imgpreview.style.top = dy + "px";
-                imgpreview.style.left = dx + "px";
+                imgpreview.style.transform = "translate("+dx+"px, "+dy + "px) scale("+zoom+")";
             }
             // Move the magnifying glass with the mouse movement.
             style.left = x + "px";
