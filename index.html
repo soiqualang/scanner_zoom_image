@@ -34,13 +34,21 @@
 
     function start() {
         let item = null;
-        if (data && data.length) {
+        if(location.search){
+            let dec = uri_decode(location.search.substring(1));
+            if(dec.url){
+                item = [dec.url, dec.url2];
+            }
+        }
+        if (!item && data && data.length) {
             item = data[0];
+        }
+        if(item){
             imgbox.src = item[0];
             urlbox1.value = item[0];
             urlbox2.value = item[1] ? item[1] : "";
         }
-        magnify("#zoom", 2, item ? item[1] : null, "#preview");
+        magnify("#zoom", 2, item && item[1]? item[1] : null, "#preview");
         createMenu(data);
     }
     function createMenu(data) {
@@ -183,20 +191,28 @@
     urlbox1.addEventListener("input", urlChange)
     function urlChange(e) {
         let url = this.value.trim();
-        if (!url) return;
+        if (!url) {
+            createUrl();
+            return;
+        }
         document.getElementById("main-img").src = url;
         let url2 = urlbox2.value.trim();
+        createUrl(url, url2);
         if (!url2) url2 = url;
         document.getElementById("glasses").style.backgroundImage = "url(" + url2 + ")";
         document.getElementById("imgpreview").src = url2;
     }
     urlbox2.addEventListener("input", function (e) {
-        let url = this.value.trim();
-        if (!url) {
-            url = urlbox1.value.trim();
+        let url2 = this.value.trim();
+        let url = urlbox1.value.trim();
+        if (!url2) {
+            url2 = url;
+            createUrl(url);
+        }else{
+            createUrl(url, url2);
         }
-        document.getElementById("glasses").style.backgroundImage = "url(" + url + ")";
-        document.getElementById("imgpreview").src = url;
+        document.getElementById("glasses").style.backgroundImage = "url(" + url2 + ")";
+        document.getElementById("imgpreview").src = url2;
     })
     imgbox.addEventListener("mouseover", function (e) {
         preview.style.visibility = "visible";
@@ -204,4 +220,45 @@
     imgbox.addEventListener("mouseout", function (e) {
         preview.style.visibility = "hidden";
     });
+    function createUrl(url=null, url2=null){
+        let uri = new URL(location.href);
+        if(url) uri.searchParams.append("url", url);
+        if(url2) uri.searchParams.append("url2", url2);
+        uri = uri.toString();
+        history.pushState({}, null, uri);
+    }
+    function urldecode(str) {
+        return decodeURIComponent(str.replace(/\+/g, ' '));
+    }
+    function urlencode(str) {
+        return encodeURIComponent(str).replace(/%20/g, "+").replace(/%2F/g, "/");
+    }
+    function uri_encode(obj) {
+        let str = '';
+        let cnt = 0;
+        for (let k in obj) {
+            if (obj[k] === undefined) continue;
+            if (cnt > 0) str += '&';
+            str += urlencode(k) + (obj[k] === null ? '' : '=' + urlencode(obj[k]));
+            cnt++;
+        }
+        return str;
+    }
+    function uri_decode(uri) {
+        if (uri === undefined || uri === null || uri == '') return {};
+        let data = {};
+        if (typeof uri !== 'string') {
+            data[String(uri)] = '';
+            return data;
+        }
+        uri.split('&').forEach(function (item) {
+            let i = item.indexOf('=');
+            if (i == -1) {
+                data[urldecode(item)] = '';
+            } else {
+                data[urldecode(item.substring(0, i))] = urldecode(item.substring(i + 1));
+            }
+        })
+        return data;
+    }
 </script>
