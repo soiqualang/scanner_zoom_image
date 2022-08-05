@@ -223,7 +223,9 @@
     function createUrl(url=null, url2=null){
         let uri = new URL(location.href);
         if(url) uri.searchParams.append("url", url);
+        else uri.searchParams.delete("url");
         if(url2) uri.searchParams.append("url2", url2);
+        else uri.searchParams.delete("url2");
         uri = uri.toString();
         history.pushState({}, null, uri);
     }
