@@ -11,4 +11,8 @@ let data=[
     "https://i.pinimg.com/564x/d6/89/cd/d689cdc6e757a580ff84a9072cc4990f.jpg",
     "https://i.pinimg.com/564x/e9/31/44/e93144893ce33b13dfb9b8be7cfd3c62.jpg",
   ],
+  [
+    "https://i.pinimg.com/564x/f9/59/bd/f959bdf16addf983e2be4f347e05b815.jpg",
+    "https://i.pinimg.com/564x/47/60/aa/4760aa7b950a052722e886353d27de63.jpg",
+  ],
 ];
